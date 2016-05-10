@@ -12,7 +12,11 @@ dependencies {
             ,'joda-time:joda-time:2.7'
             ,'junit:junit:4.12'
             ,'com.google.guava:guava:18.0'
-
+            ,'mysql:mysql-connector-java:5.1.36'
+            ,'org.springframework:spring-webmvc:4.2.6.RELEASE'
+            ,'org.mybatis:mybatis:3.4.0'
+            ,'com.zaxxer:HikariCP:2.4.6'
+            ,'org.springframework:spring-jdbc:4.2.6.RELEASE'
     )
 }
 
