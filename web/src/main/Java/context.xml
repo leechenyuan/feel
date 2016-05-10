@@ -8,12 +8,12 @@
       <property name="dataSourceProperties" >
         <props>
             <prop key="dataSource.url">jdbc:MySQL://localhost:3306/feels</prop>
-            <prop key="dataSource.user">L</prop>
+            <prop key="dataSource.user">practice</prop>
             <prop key="dataSource.password">fishing</prop>
         </props>
       </property>
       <property name="dataSourceClassName"
-                value="com.mysql.jdbc.Driver" />
+                value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
     </bean>
 
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
