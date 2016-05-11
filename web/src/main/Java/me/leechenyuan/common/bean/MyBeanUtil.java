@@ -14,7 +14,7 @@ public class MyBeanUtil {
     }
     private static ApplicationContext loadContext(){
         ApplicationContext context =
-                new ClassPathXmlApplicationContext("context.xml");
+                new ClassPathXmlApplicationContext("Resource/context.xml");
         return  context;
     }
 }

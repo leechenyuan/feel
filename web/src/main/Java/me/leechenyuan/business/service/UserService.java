@@ -1,7 +1,10 @@
 package me.leechenyuan.business.service;
 
 import me.leechenyuan.business.dao.UserDao;
+import me.leechenyuan.common.bean.MyBeanUtil;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
@@ -9,21 +12,18 @@ import java.util.Random;
 /**
  * Created by lideda on 2016/5/10.
  */
+@Transactional
+@Component("userService")
 public class UserService {
-    private static final UserDao userDao = new UserDao();
-    @Transactional
-    public static int incScore(){
+    @Autowired
+    private UserDao userDao ;
+    public int incScore(boolean thr){
         int inc = 10;
         userDao.incUserScore(1,inc);
-        if(new Random().nextBoolean()){
+        if(thr){
             throw new IllegalArgumentException("dadsada");
         }
         userDao.incUserScore(2,-inc);
         return 0;
-    }
-
-    @Test
-    public void test(){
-       incScore();
     }
 }
