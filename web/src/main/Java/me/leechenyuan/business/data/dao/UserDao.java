@@ -1,7 +1,5 @@
-package me.leechenyuan.business.dao;
+package me.leechenyuan.business.data.dao;
 
-import org.omg.CORBA.OBJ_ADAPTER;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
 
 /**

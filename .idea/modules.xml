@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feels.iml" filepath="$PROJECT_DIR$/.idea/modules/feels.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feels_main.iml" filepath="$PROJECT_DIR$/.idea/modules/feels_main.iml" group="feels" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feels_test.iml" filepath="$PROJECT_DIR$/.idea/modules/feels_test.iml" group="feels" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/web.iml" filepath="$PROJECT_DIR$/.idea/modules/web.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/web_main.iml" filepath="$PROJECT_DIR$/.idea/modules/web_main.iml" group="web" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/web_test.iml" filepath="$PROJECT_DIR$/.idea/modules/web_test.iml" group="web" />

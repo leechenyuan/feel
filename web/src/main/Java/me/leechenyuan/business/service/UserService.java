@@ -1,13 +1,9 @@
 package me.leechenyuan.business.service;
 
-import me.leechenyuan.business.dao.UserDao;
-import me.leechenyuan.common.bean.MyBeanUtil;
-import org.junit.Test;
+import me.leechenyuan.business.data.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Random;
 
 /**
  * Created by lideda on 2016/5/10.

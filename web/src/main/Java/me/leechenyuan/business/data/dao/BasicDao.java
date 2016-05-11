@@ -1,4 +1,4 @@
-package me.leechenyuan.business.dao;
+package me.leechenyuan.business.data.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;

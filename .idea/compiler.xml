@@ -19,6 +19,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="feels_main" target="1.5" />
+      <module name="feels_test" target="1.5" />
       <module name="web_main" target="1.6" />
       <module name="web_test" target="1.6" />
     </bytecodeTargetLevel>
