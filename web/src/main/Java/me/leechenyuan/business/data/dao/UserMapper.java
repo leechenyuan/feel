@@ -4,6 +4,7 @@ import java.util.List;
 import me.leechenyuan.business.data.dao.entity.User;
 import me.leechenyuan.business.data.dao.entity.UserExample;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 public interface UserMapper {
     int countByExample(UserExample example);
@@ -27,4 +28,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    @Update("update User set Score=Score+#{Score} where UserId=#{UserId}")
+    int increaseScore(@Param("UserId") int userId,@Param("Score") int score);
 }

@@ -21,6 +21,14 @@ public class UserServiceTest {
     @Test
     public void testBatis() throws IllegalAccessException, InstantiationException {
         UserMapperService userMapperService = MyBeanUtil.getBean("userMapperService");
-        Gson.class.newInstance().toJson(userMapperService.getUserById(1));
+        System.out.println(Gson.class.newInstance().toJson(userMapperService.getUserById(1)));
+    }
+
+    @Test
+    public void testBatisWithTransaction() throws IllegalAccessException, InstantiationException {
+        UserMapperService userMapperService = MyBeanUtil.getBean("userMapperService");
+        userMapperService.increaseScore(1,2,10,false);
+        userMapperService.increaseScore(1,2,10,true);
+        System.out.println(Gson.class.newInstance().toJson(userMapperService.getUserById(1)));
     }
 }
