@@ -102,6 +102,7 @@ public class ImageTest {
         byte [] buff = new byte[desc.available()];
         desc.read(buff);
         Files.write(buff,new File(descImage));
+//        不能将desc转成byte [] 写入wrtier，否则保存的图片会破损，原因未明.
 //        Writer writer = new FileWriter(descImage);
 //        IOUtils.write(IOUtils.toByteArray(desc), writer);
 //        writer.flush();
