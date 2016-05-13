@@ -98,7 +98,6 @@ public class ImageTest {
         String src = "E:\\temp\\image\\bueaty.jpg";
         String descImage = "E:\\temp\\image\\bueaty_imageUtil.jpg";
         InputStream in = new FileInputStream(src);
-//                IOUtils.toInputStream(src);
         InputStream desc = ImageUtil.resize(in, MimeUtil.getMimeType(src),100,100);
         byte [] buff = new byte[desc.available()];
         desc.read(buff);
