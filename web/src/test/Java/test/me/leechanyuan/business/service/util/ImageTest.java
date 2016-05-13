@@ -3,7 +3,6 @@ package test.me.leechanyuan.business.service.util;
 import com.google.common.io.Files;
 import me.leechenyuan.common.utils.MimeUtil;
 import me.leechenyuan.common.utils.image.ImageUtil;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.im4java.core.ConvertCmd;
 import org.im4java.core.IM4JavaException;
@@ -11,7 +10,6 @@ import org.im4java.core.IMOperation;
 import org.im4java.process.Pipe;
 import org.im4java.process.StandardStream;
 import org.junit.Test;
-import org.springframework.util.MimeTypeUtils;
 
 import java.io.*;
 
