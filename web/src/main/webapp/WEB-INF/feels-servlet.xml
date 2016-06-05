@@ -2,48 +2,90 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd
-           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
-           ">
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <context:component-scan base-package="me.feelwith"></context:component-scan>
-    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
 
-    <bean id="transactionManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"></property>
-    </bean>
-    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-      <property name="dataSourceProperties" >
-        <props>
-            <prop key="url">jdbc:MySQL://localhost:3306/feels</prop>
-            <!-- <prop key="user">L</prop> -->
-            <prop key="user">practice</prop>
-            <prop key="password">fishing</prop>
-            <prop key="databaseName">feels</prop>
-        </props>
-      </property>
-      <property name="dataSourceClassName"
-                value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
+    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">-->
+    <!--</bean>-->
+
+
+    <!--
+        View resolver that delegates to other view resolvers based on the content type
+    -->
+    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">-->
+       <!--&lt;!&ndash; All configuration is now done by the manager - since Spring V3.2 &ndash;&gt;-->
+       <!--<property name="contentNegotiationManager" ref="cnManager"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;-->
+        <!--Setup a simple strategy:-->
+           <!--1. Only path extension is taken into account, Accept headers are ignored.-->
+           <!--2. Return HTML by default when not sure.-->
+     <!--&ndash;&gt;-->
+    <!--<bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
+        <!--<property name="favorPathExtension" value="true"/>-->
+		<!--<property name="ignoreAcceptHeader" value="true" />-->
+		<!--<property name="defaultContentType" value="text/json" />-->
+		<!--<property name="useJaf" value="false"/>-->
+
+		<!--<property name="mediaTypes">-->
+			<!--<map>-->
+				<!--<entry key="html" value="text/html" />-->
+				<!--<entry key="json" value="application/json" />-->
+				<!--<entry key="xml" value="application/xml" />-->
+			<!--</map>-->
+		<!--</property>-->
+    <!--</bean>-->
+     <!-- Make this available across all of Spring MVC -->
+
+    <bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="favorPathExtension" value="true"/>
+        <property name="defaultContentType" value="text/html"/>
+        <property name="favorParameter" value="true"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="xml" value="application/xml"/>
+                <entry key="json" value="text/plain"/>
+                <entry key="xls" value="application/vnd.ms-excel"/>
+            </map>
+        </property>
     </bean>
 
-    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
-        <constructor-arg ref="hikariConfig" />
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="contentNegotiationManager" ref="cnManager"/>
+        <property name="viewResolvers"><!-- 针对freemarker的视图配置 -->
+            <list>
+                <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+                    <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+                    <property name="viewNames" value=".ftl"/>
+                    <property name="contentType" value="text/html; charset=utf-8"/>
+                    <property name="cache" value="true" />
+                    <property name="prefix" value="" />
+                    <property name="suffix" value="" />
+                    <property name="order" value="2"/>
+                </bean>
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="prefix" value="/WEB-INF/view/jsp/"></property><!-- 配置页面路径 -->
+                    <property name="suffix" value=".jsp"></property><!-- 文件以value值结尾 -->
+                </bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+                    <!-- <property name="extractValueFromSingleKeyModel" value="true"/> -->
+                    <property name="prettyPrint" value="true"/>
+                    <property name="contentType" value="text/plain"/>
+                </bean>
+            </list>
+        </property>
     </bean>
-    
-    <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->  
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
-        <property name="dataSource" ref="dataSource" />  
-        <!-- 自动扫描mapping.xml文件 -->  
-        <property name="mapperLocations" value="classpath:map/*.xml"></property>
-    </bean>  
-  
-    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->  
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
-        <property name="basePackage" value="me.feelwith.business.data.dao" />
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>  
-    </bean>  
+    <mvc:annotation-driven content-negotiation-manager="cnManager" />
 </beans>

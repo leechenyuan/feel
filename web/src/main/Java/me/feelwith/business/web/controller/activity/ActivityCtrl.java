@@ -1,4 +1,4 @@
-package me.feelwith.business.web.activity;
+package me.feelwith.business.web.controller.activity;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ public class ActivityCtrl {
 
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView add(@RequestParam Map<String,String> requestParams){
-       System.out.println(requestParams);
+        System.out.println(requestParams);
         return null;
     }
 }
