@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.feelwith.business.data.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="me.feelwith.business.data.dao.entity.User">
+    <id column="UserId" jdbcType="INTEGER" property="userId" />
+    <result column="WeChatId" jdbcType="VARCHAR" property="weChatId" />
+    <result column="Avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="Gender" jdbcType="TINYINT" property="gender" />
+    <result column="Area" jdbcType="VARCHAR" property="area" />
+    <result column="Language" jdbcType="VARCHAR" property="language" />
+    <result column="Score" jdbcType="INTEGER" property="score" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    UserId, WeChatId, Avatar, Gender, Area, Language, Score
+  </sql>
+  <select id="selectByExample" parameterType="me.feelwith.business.data.dao.entity.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where UserId = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where UserId = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.feelwith.business.data.dao.entity.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.feelwith.business.data.dao.entity.User">
+    insert into user (UserId, WeChatId, Avatar, 
+      Gender, Area, Language, 
+      Score)
+    values (#{userId,jdbcType=INTEGER}, #{weChatId,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=TINYINT}, #{area,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
+      #{score,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="me.feelwith.business.data.dao.entity.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        UserId,
+      </if>
+      <if test="weChatId != null">
+        WeChatId,
+      </if>
+      <if test="avatar != null">
+        Avatar,
+      </if>
+      <if test="gender != null">
+        Gender,
+      </if>
+      <if test="area != null">
+        Area,
+      </if>
+      <if test="language != null">
+        Language,
+      </if>
+      <if test="score != null">
+        Score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="weChatId != null">
+        #{weChatId,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.feelwith.business.data.dao.entity.UserExample" resultType="java.lang.Integer">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.userId != null">
+        UserId = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.weChatId != null">
+        WeChatId = #{record.weChatId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null">
+        Avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        Gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.area != null">
+        Area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.language != null">
+        Language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null">
+        Score = #{record.score,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set UserId = #{record.userId,jdbcType=INTEGER},
+      WeChatId = #{record.weChatId,jdbcType=VARCHAR},
+      Avatar = #{record.avatar,jdbcType=VARCHAR},
+      Gender = #{record.gender,jdbcType=TINYINT},
+      Area = #{record.area,jdbcType=VARCHAR},
+      Language = #{record.language,jdbcType=VARCHAR},
+      Score = #{record.score,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.feelwith.business.data.dao.entity.User">
+    update user
+    <set>
+      <if test="weChatId != null">
+        WeChatId = #{weChatId,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        Avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        Gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="area != null">
+        Area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        Language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        Score = #{score,jdbcType=INTEGER},
+      </if>
+    </set>
+    where UserId = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.feelwith.business.data.dao.entity.User">
+    update user
+    set WeChatId = #{weChatId,jdbcType=VARCHAR},
+      Avatar = #{avatar,jdbcType=VARCHAR},
+      Gender = #{gender,jdbcType=TINYINT},
+      Area = #{area,jdbcType=VARCHAR},
+      Language = #{language,jdbcType=VARCHAR},
+      Score = #{score,jdbcType=INTEGER}
+    where UserId = #{userId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="me.feelwith.business.data.dao.entity.User">
+    <id column="UserId" jdbcType="INTEGER" property="userid" />
+    <result column="WeChatId" jdbcType="VARCHAR" property="wechatid" />
+    <result column="Avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="Gender" jdbcType="TINYINT" property="gender" />
+    <result column="Area" jdbcType="VARCHAR" property="area" />
+    <result column="Language" jdbcType="VARCHAR" property="language" />
+    <result column="Score" jdbcType="INTEGER" property="score" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    UserId, WeChatId, Avatar, Gender, Area, Language, Score
+  </sql>
+  <select id="selectByExample" parameterType="me.feelwith.business.data.dao.entity.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where UserId = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where UserId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.feelwith.business.data.dao.entity.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.feelwith.business.data.dao.entity.User">
+    insert into user (UserId, WeChatId, Avatar, 
+      Gender, Area, Language, 
+      Score)
+    values (#{userid,jdbcType=INTEGER}, #{wechatid,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=TINYINT}, #{area,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
+      #{score,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="me.feelwith.business.data.dao.entity.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        UserId,
+      </if>
+      <if test="wechatid != null">
+        WeChatId,
+      </if>
+      <if test="avatar != null">
+        Avatar,
+      </if>
+      <if test="gender != null">
+        Gender,
+      </if>
+      <if test="area != null">
+        Area,
+      </if>
+      <if test="language != null">
+        Language,
+      </if>
+      <if test="score != null">
+        Score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="wechatid != null">
+        #{wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.feelwith.business.data.dao.entity.UserExample" resultType="java.lang.Integer">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.userid != null">
+        UserId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.wechatid != null">
+        WeChatId = #{record.wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null">
+        Avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        Gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.area != null">
+        Area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.language != null">
+        Language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null">
+        Score = #{record.score,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set UserId = #{record.userid,jdbcType=INTEGER},
+      WeChatId = #{record.wechatid,jdbcType=VARCHAR},
+      Avatar = #{record.avatar,jdbcType=VARCHAR},
+      Gender = #{record.gender,jdbcType=TINYINT},
+      Area = #{record.area,jdbcType=VARCHAR},
+      Language = #{record.language,jdbcType=VARCHAR},
+      Score = #{record.score,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.feelwith.business.data.dao.entity.User">
+    update user
+    <set>
+      <if test="wechatid != null">
+        WeChatId = #{wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        Avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        Gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="area != null">
+        Area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        Language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        Score = #{score,jdbcType=INTEGER},
+      </if>
+    </set>
+    where UserId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.feelwith.business.data.dao.entity.User">
+    update user
+    set WeChatId = #{wechatid,jdbcType=VARCHAR},
+      Avatar = #{avatar,jdbcType=VARCHAR},
+      Gender = #{gender,jdbcType=TINYINT},
+      Area = #{area,jdbcType=VARCHAR},
+      Language = #{language,jdbcType=VARCHAR},
+      Score = #{score,jdbcType=INTEGER}
+    where UserId = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

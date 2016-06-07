@@ -4,6 +4,7 @@ import java.util.List;
 import me.feelwith.business.data.dao.entity.User;
 import me.feelwith.business.data.dao.entity.UserExample;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 public interface UserMapper {
@@ -28,6 +29,10 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
     @Update("update User set Score=Score+#{Score} where UserId=#{UserId}")
-    int increaseScore(@Param("UserId") int userId,@Param("Score") int score);
+    int increaseScore(@Param("UserId") int userId, @Param("Score") int score);
+
+    @Select("SELECT  LAST_INSERT_ID()")
+    int selectLastId();
 }

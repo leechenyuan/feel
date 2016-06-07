@@ -1,13 +1,17 @@
 package me.feelwith.business.service.impl;
 
 import me.feelwith.business.service.IFileUploadService;
+import me.feelwith.business.web.result.UploadResult;
 import me.feelwith.exception.UploadException;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import sun.nio.ch.IOUtil;
 
 import java.io.*;
 
@@ -33,7 +37,11 @@ public class FastDfsUploadServiceWrapper implements IFileUploadService {
 
     @Override
     public String uploadFile(InputStream in, String fileName) throws UploadException {
-        return null;
+        String [] infos = FastDfsWrapper.uploadFile(in,fileName);
+        if(ArrayUtils.isEmpty(infos)){
+            return null;
+        }
+        return infos[0]+"/"+infos[1];
     }
 
     @Override
@@ -53,7 +61,7 @@ public class FastDfsUploadServiceWrapper implements IFileUploadService {
 
     private static class FastDfsWrapper {
        private static final String configFileName =
-               "E:\\homework\\java\\workspace\\feels\\web\\src\\main\\Resource\\fdfs_client.conf";
+               "E:\\homework\\java\\workspace\\feels\\web\\src\\main\\resources\\fdfs_client.conf";
 //                "fdfs_client.conf";
        static {
            init();
@@ -68,6 +76,54 @@ public class FastDfsUploadServiceWrapper implements IFileUploadService {
         /**
          * 上传文件
          */
+        public static String [] uploadFile(InputStream in,String uploadFileName)throws UploadException{
+             logger.debug("上传文件=======================");
+            byte[] fileBuff = null;
+            try {
+                fileBuff = IOUtils.toByteArray(in);
+            } catch (IOException e) {
+                transferException(e);
+            }
+            String[] files = null;
+            String fileExtName = "";
+            int fileLength = fileBuff.length;
+            if (uploadFileName.contains(".")) {
+                fileExtName = uploadFileName.substring(uploadFileName.lastIndexOf(".") + 1);
+            } else {
+                logger.debug("Fail to upload file, because the format of filename is illegal.");
+                return null;
+            }
+
+            // 建立连接
+            TrackerClient tracker = new TrackerClient();
+            TrackerServer trackerServer = null;
+            try {
+                trackerServer = tracker.getConnection();
+            } catch (IOException e) {
+                transferException(e);
+            }
+            StorageServer storageServer = null;
+            StorageClient client = new StorageClient(trackerServer, storageServer);
+
+            // 设置元信息
+            NameValuePair[] metaList = new NameValuePair[3];
+            metaList[0] = new NameValuePair("fileName", uploadFileName);
+            metaList[1] = new NameValuePair("fileExtName", fileExtName);
+            metaList[2] = new NameValuePair("fileLength", String.valueOf(fileLength));
+
+            // 上传文件
+            try {
+                files = client.upload_file(fileBuff, fileExtName, metaList);
+            } catch (Exception e) {
+                logger.debug("Upload file \"" + uploadFileName + "\"fails",e);
+            }
+            try {
+                trackerServer.close();
+            } catch (IOException e) {
+                transferException(e);
+            }
+            return files;
+        }
         public static String[] uploadFile(File file, String uploadFileName, long fileLength) throws UploadException {
             logger.debug("上传文件=======================");
             byte[] fileBuff = new byte[0];

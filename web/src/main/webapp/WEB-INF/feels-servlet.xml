@@ -88,4 +88,13 @@
         </property>
     </bean>
     <mvc:annotation-driven content-negotiation-manager="cnManager" />
+    <bean id="multipartResolver"
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize">
+        <value>1024102400</value>
+    </property>
+    <property name="maxInMemorySize">
+        <value>1024102400</value>
+    </property>
+    </bean>
 </beans>
