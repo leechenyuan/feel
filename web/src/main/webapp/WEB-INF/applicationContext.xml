@@ -20,8 +20,9 @@
       <property name="dataSourceProperties" >
         <props>
             <prop key="url">jdbc:MySQL://localhost:3306/feels</prop>
-            <!-- <prop key="user">L</prop> -->
+             <!--<prop key="user">L</prop>-->
             <prop key="user">practice</prop>
+            <!--<prop key="password">bylgdm235@#%</prop>-->
             <prop key="password">fishing</prop>
             <prop key="databaseName">feels</prop>
         </props>

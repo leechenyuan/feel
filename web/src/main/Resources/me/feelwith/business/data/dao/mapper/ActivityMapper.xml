@@ -3,8 +3,12 @@
 <mapper namespace="me.feelwith.business.data.dao.ActivityMapper" >
   <resultMap id="BaseResultMap" type="me.feelwith.business.data.dao.entity.Activity" >
     <id column="ActivityId" property="activityId" jdbcType="INTEGER" />
+    <result column="UserId" property="userId" jdbcType="INTEGER" />
     <result column="Description" property="description" jdbcType="VARCHAR" />
     <result column="CreateTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="Likes" property="likes" jdbcType="INTEGER" />
+    <result column="RecentLikes" property="recentLikes" jdbcType="INTEGER" />
+    <result column="Comments" property="comments" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ActivityId, Description, CreateTime
+    ActivityId, UserId, Description, CreateTime, Likes, RecentLikes, Comments
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.feelwith.business.data.dao.entity.ActivityExample" >
     select
@@ -79,6 +83,14 @@
     </if>
     <if test="orderByClause != null" >
       order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -98,10 +110,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="me.feelwith.business.data.dao.entity.Activity" >
-    insert into activity (ActivityId, Description, CreateTime
-      )
-    values (#{activityId,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+    insert into activity (ActivityId, UserId, Description, 
+      CreateTime, Likes, RecentLikes, 
+      Comments)
+    values (#{activityId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{likes,jdbcType=INTEGER}, #{recentLikes,jdbcType=INTEGER}, 
+      #{comments,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="me.feelwith.business.data.dao.entity.Activity" >
     insert into activity
@@ -109,22 +123,46 @@
       <if test="activityId != null" >
         ActivityId,
       </if>
+      <if test="userId != null" >
+        UserId,
+      </if>
       <if test="description != null" >
         Description,
       </if>
       <if test="createTime != null" >
         CreateTime,
       </if>
+      <if test="likes != null" >
+        Likes,
+      </if>
+      <if test="recentLikes != null" >
+        RecentLikes,
+      </if>
+      <if test="comments != null" >
+        Comments,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="activityId != null" >
         #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="likes != null" >
+        #{likes,jdbcType=INTEGER},
+      </if>
+      <if test="recentLikes != null" >
+        #{recentLikes,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -140,11 +178,23 @@
       <if test="record.activityId != null" >
         ActivityId = #{record.activityId,jdbcType=INTEGER},
       </if>
+      <if test="record.userId != null" >
+        UserId = #{record.userId,jdbcType=INTEGER},
+      </if>
       <if test="record.description != null" >
         Description = #{record.description,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null" >
         CreateTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.likes != null" >
+        Likes = #{record.likes,jdbcType=INTEGER},
+      </if>
+      <if test="record.recentLikes != null" >
+        RecentLikes = #{record.recentLikes,jdbcType=INTEGER},
+      </if>
+      <if test="record.comments != null" >
+        Comments = #{record.comments,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -154,8 +204,12 @@
   <update id="updateByExample" parameterType="map" >
     update activity
     set ActivityId = #{record.activityId,jdbcType=INTEGER},
+      UserId = #{record.userId,jdbcType=INTEGER},
       Description = #{record.description,jdbcType=VARCHAR},
-      CreateTime = #{record.createTime,jdbcType=TIMESTAMP}
+      CreateTime = #{record.createTime,jdbcType=TIMESTAMP},
+      Likes = #{record.likes,jdbcType=INTEGER},
+      RecentLikes = #{record.recentLikes,jdbcType=INTEGER},
+      Comments = #{record.comments,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -163,19 +217,35 @@
   <update id="updateByPrimaryKeySelective" parameterType="me.feelwith.business.data.dao.entity.Activity" >
     update activity
     <set >
+      <if test="userId != null" >
+        UserId = #{userId,jdbcType=INTEGER},
+      </if>
       <if test="description != null" >
         Description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         CreateTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="likes != null" >
+        Likes = #{likes,jdbcType=INTEGER},
+      </if>
+      <if test="recentLikes != null" >
+        RecentLikes = #{recentLikes,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        Comments = #{comments,jdbcType=INTEGER},
+      </if>
     </set>
     where ActivityId = #{activityId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="me.feelwith.business.data.dao.entity.Activity" >
     update activity
-    set Description = #{description,jdbcType=VARCHAR},
-      CreateTime = #{createTime,jdbcType=TIMESTAMP}
+    set UserId = #{userId,jdbcType=INTEGER},
+      Description = #{description,jdbcType=VARCHAR},
+      CreateTime = #{createTime,jdbcType=TIMESTAMP},
+      Likes = #{likes,jdbcType=INTEGER},
+      RecentLikes = #{recentLikes,jdbcType=INTEGER},
+      Comments = #{comments,jdbcType=INTEGER}
     where ActivityId = #{activityId,jdbcType=INTEGER}
   </update>
 </mapper>

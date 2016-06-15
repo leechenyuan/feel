@@ -30,5 +30,5 @@ public interface ActivityMapper {
     int updateByPrimaryKey(Activity record);
 
     @Select("SELECT  LAST_INSERT_ID()")
-    int selectLastId();
+    int selectLastInsertId();
 }

@@ -26,7 +26,7 @@ public class UserServiceTest {
 
     @Test
     public void testBatisWithTransaction() throws IllegalAccessException, InstantiationException {
-        UserService userMapperService = MyBeanUtil.getBean("userMapperService");
+        UserService userMapperService = MyBeanUtil.getBean("userService");
         userMapperService.increaseScore(1,2,10,false);
         userMapperService.increaseScore(1,2,10,true);
         System.out.println(Gson.class.newInstance().toJson(userMapperService.getUserById(1)));

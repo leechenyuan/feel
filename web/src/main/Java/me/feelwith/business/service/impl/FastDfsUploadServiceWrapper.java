@@ -1,19 +1,19 @@
 package me.feelwith.business.service.impl;
 
 import me.feelwith.business.service.IFileUploadService;
-import me.feelwith.business.web.result.UploadResult;
 import me.feelwith.exception.UploadException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import sun.nio.ch.IOUtil;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 
 /**
  * Created by lideda on 2016/5/12.
@@ -61,14 +61,15 @@ public class FastDfsUploadServiceWrapper implements IFileUploadService {
 
     private static class FastDfsWrapper {
        private static final String configFileName =
-               "E:\\homework\\java\\workspace\\feels\\web\\src\\main\\resources\\fdfs_client.conf";
+               "fdfs_client.conf";
 //                "fdfs_client.conf";
        static {
            init();
        }
         private static void init(){
             try {
-                ClientGlobal.init(configFileName);
+//                ClientGlobal.init(configFileName);
+                ClientGlobalWrap.init(configFileName);
             } catch (Throwable e) {
                 logger.error(e.getMessage(),e);
             }
@@ -242,6 +243,54 @@ public class FastDfsUploadServiceWrapper implements IFileUploadService {
             StorageClient storageClient = new StorageClient(trackerServer, storageServer);
             int i = storageClient.delete_file(groupName, filepath);
             logger.debug(i == 0 ? "删除成功" : "删除失败:" + i);
+        }
+    }
+
+
+    private static class ClientGlobalWrap{
+        //初始化文件上传的配置
+        public static void init(String conf_filename) throws MyException, IOException {
+            FooIniFileReader iniReader = new FooIniFileReader(conf_filename);
+            ClientGlobal.g_connect_timeout = iniReader.getIntValue("connect_timeout", 5);
+            if(ClientGlobal.g_connect_timeout < 0) {
+                ClientGlobal.g_connect_timeout = 5;
+            }
+
+            ClientGlobal.g_connect_timeout *= 1000;
+            ClientGlobal.g_network_timeout = iniReader.getIntValue("network_timeout", 30);
+            if(ClientGlobal.g_network_timeout < 0) {
+                ClientGlobal.g_network_timeout = 30;
+            }
+
+            ClientGlobal.g_network_timeout *= 1000;
+            ClientGlobal.g_charset = iniReader.getStrValue("charset");
+            if(ClientGlobal.g_charset == null || ClientGlobal.g_charset.length() == 0) {
+                ClientGlobal.g_charset = "ISO8859-1";
+            }
+
+            String[] szTrackerServers = iniReader.getValues("tracker_server");
+            if(szTrackerServers == null) {
+                throw new MyException("item \"tracker_server\" in " + conf_filename + " not found");
+            } else {
+                InetSocketAddress[] tracker_servers = new InetSocketAddress[szTrackerServers.length];
+
+                for(int i = 0; i < szTrackerServers.length; ++i) {
+                    String[] parts = szTrackerServers[i].split("\\:", 2);
+                    if(parts.length != 2) {
+                        throw new MyException("the value of item \"tracker_server\" is invalid, the correct format is host:port");
+                    }
+
+                    tracker_servers[i] = new InetSocketAddress(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+                }
+
+                ClientGlobal.g_tracker_group = new TrackerGroup(tracker_servers);
+                ClientGlobal.g_tracker_http_port = iniReader.getIntValue("http.tracker_http_port", 80);
+                ClientGlobal.g_anti_steal_token = iniReader.getBoolValue("http.anti_steal_token", false);
+                if(ClientGlobal.g_anti_steal_token) {
+                    ClientGlobal.g_secret_key = iniReader.getStrValue("http.secret_key");
+                }
+
+            }
         }
     }
 }

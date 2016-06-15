@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.jws.soap.SOAPBinding;
 
 /**
  * Created by lideda on 2016/5/11.
@@ -15,6 +16,13 @@ import javax.annotation.Resource;
 public class UserService {
     @Resource
     private UserMapper userMapper;
+
+    public User addUser(User user){
+        userMapper.insert(user);
+        int id = userMapper.selectLastInsertId();
+        return userMapper.selectByPrimaryKey(id);
+    }
+
     public User getUserById(int userId){
         return this.userMapper.selectByPrimaryKey(userId);
     }
@@ -23,7 +31,6 @@ public class UserService {
         if(ifThrow){
             throw new IllegalArgumentException("this is an excep");
         }
-        this.userMapper.increaseScore(bUserId,-score);
-        return 0;
+        return this.userMapper.increaseScore(bUserId,-score);
     }
 }

@@ -11,6 +11,10 @@ public class ActivityExample {
 
     protected List<Criteria> oredCriteria;
 
+    private Integer limit;
+
+    private Integer offset;
+
     public ActivityExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
@@ -62,6 +66,22 @@ public class ActivityExample {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
+    public Integer getOffset() {
+        return offset;
     }
 
     protected abstract static class GeneratedCriteria {
@@ -162,6 +182,66 @@ public class ActivityExample {
 
         public Criteria andActivityIdNotBetween(Integer value1, Integer value2) {
             addCriterion("ActivityId not between", value1, value2, "activityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIsNull() {
+            addCriterion("UserId is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("UserId is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdEqualTo(Integer value) {
+            addCriterion("UserId =", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotEqualTo(Integer value) {
+            addCriterion("UserId <>", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdGreaterThan(Integer value) {
+            addCriterion("UserId >", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("UserId >=", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLessThan(Integer value) {
+            addCriterion("UserId <", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLessThanOrEqualTo(Integer value) {
+            addCriterion("UserId <=", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIn(List<Integer> values) {
+            addCriterion("UserId in", values, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotIn(List<Integer> values) {
+            addCriterion("UserId not in", values, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdBetween(Integer value1, Integer value2) {
+            addCriterion("UserId between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("UserId not between", value1, value2, "userId");
             return (Criteria) this;
         }
 
@@ -292,6 +372,186 @@ public class ActivityExample {
 
         public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
             addCriterion("CreateTime not between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesIsNull() {
+            addCriterion("Likes is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesIsNotNull() {
+            addCriterion("Likes is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesEqualTo(Integer value) {
+            addCriterion("Likes =", value, "likes");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesNotEqualTo(Integer value) {
+            addCriterion("Likes <>", value, "likes");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesGreaterThan(Integer value) {
+            addCriterion("Likes >", value, "likes");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesGreaterThanOrEqualTo(Integer value) {
+            addCriterion("Likes >=", value, "likes");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesLessThan(Integer value) {
+            addCriterion("Likes <", value, "likes");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesLessThanOrEqualTo(Integer value) {
+            addCriterion("Likes <=", value, "likes");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesIn(List<Integer> values) {
+            addCriterion("Likes in", values, "likes");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesNotIn(List<Integer> values) {
+            addCriterion("Likes not in", values, "likes");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesBetween(Integer value1, Integer value2) {
+            addCriterion("Likes between", value1, value2, "likes");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikesNotBetween(Integer value1, Integer value2) {
+            addCriterion("Likes not between", value1, value2, "likes");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesIsNull() {
+            addCriterion("RecentLikes is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesIsNotNull() {
+            addCriterion("RecentLikes is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesEqualTo(Integer value) {
+            addCriterion("RecentLikes =", value, "recentLikes");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesNotEqualTo(Integer value) {
+            addCriterion("RecentLikes <>", value, "recentLikes");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesGreaterThan(Integer value) {
+            addCriterion("RecentLikes >", value, "recentLikes");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesGreaterThanOrEqualTo(Integer value) {
+            addCriterion("RecentLikes >=", value, "recentLikes");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesLessThan(Integer value) {
+            addCriterion("RecentLikes <", value, "recentLikes");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesLessThanOrEqualTo(Integer value) {
+            addCriterion("RecentLikes <=", value, "recentLikes");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesIn(List<Integer> values) {
+            addCriterion("RecentLikes in", values, "recentLikes");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesNotIn(List<Integer> values) {
+            addCriterion("RecentLikes not in", values, "recentLikes");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesBetween(Integer value1, Integer value2) {
+            addCriterion("RecentLikes between", value1, value2, "recentLikes");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentLikesNotBetween(Integer value1, Integer value2) {
+            addCriterion("RecentLikes not between", value1, value2, "recentLikes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsIsNull() {
+            addCriterion("Comments is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsIsNotNull() {
+            addCriterion("Comments is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsEqualTo(Integer value) {
+            addCriterion("Comments =", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsNotEqualTo(Integer value) {
+            addCriterion("Comments <>", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsGreaterThan(Integer value) {
+            addCriterion("Comments >", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsGreaterThanOrEqualTo(Integer value) {
+            addCriterion("Comments >=", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsLessThan(Integer value) {
+            addCriterion("Comments <", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsLessThanOrEqualTo(Integer value) {
+            addCriterion("Comments <=", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsIn(List<Integer> values) {
+            addCriterion("Comments in", values, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsNotIn(List<Integer> values) {
+            addCriterion("Comments not in", values, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsBetween(Integer value1, Integer value2) {
+            addCriterion("Comments between", value1, value2, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsNotBetween(Integer value1, Integer value2) {
+            addCriterion("Comments not between", value1, value2, "comments");
             return (Criteria) this;
         }
     }

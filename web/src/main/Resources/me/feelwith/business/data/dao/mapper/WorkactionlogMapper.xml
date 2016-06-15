@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.feelwith.business.data.dao.WorkactionlogMapper" >
+  <resultMap id="BaseResultMap" type="me.feelwith.business.data.dao.entity.Workactionlog" >
+    <id column="WorkId" property="workId" jdbcType="INTEGER" />
+    <result column="Likes" property="likes" jdbcType="INTEGER" />
+    <result column="LikeDate" property="likeDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    WorkId, Likes, LikeDate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.feelwith.business.data.dao.entity.WorkactionlogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from workactionlog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from workactionlog
+    where WorkId = #{workId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from workactionlog
+    where WorkId = #{workId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.feelwith.business.data.dao.entity.WorkactionlogExample" >
+    delete from workactionlog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.feelwith.business.data.dao.entity.Workactionlog" >
+    insert into workactionlog (WorkId, Likes, LikeDate
+      )
+    values (#{workId,jdbcType=INTEGER}, #{likes,jdbcType=INTEGER}, #{likeDate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="me.feelwith.business.data.dao.entity.Workactionlog" >
+    insert into workactionlog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="workId != null" >
+        WorkId,
+      </if>
+      <if test="likes != null" >
+        Likes,
+      </if>
+      <if test="likeDate != null" >
+        LikeDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="workId != null" >
+        #{workId,jdbcType=INTEGER},
+      </if>
+      <if test="likes != null" >
+        #{likes,jdbcType=INTEGER},
+      </if>
+      <if test="likeDate != null" >
+        #{likeDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.feelwith.business.data.dao.entity.WorkactionlogExample" resultType="java.lang.Integer" >
+    select count(*) from workactionlog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update workactionlog
+    <set >
+      <if test="record.workId != null" >
+        WorkId = #{record.workId,jdbcType=INTEGER},
+      </if>
+      <if test="record.likes != null" >
+        Likes = #{record.likes,jdbcType=INTEGER},
+      </if>
+      <if test="record.likeDate != null" >
+        LikeDate = #{record.likeDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update workactionlog
+    set WorkId = #{record.workId,jdbcType=INTEGER},
+      Likes = #{record.likes,jdbcType=INTEGER},
+      LikeDate = #{record.likeDate,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.feelwith.business.data.dao.entity.Workactionlog" >
+    update workactionlog
+    <set >
+      <if test="likes != null" >
+        Likes = #{likes,jdbcType=INTEGER},
+      </if>
+      <if test="likeDate != null" >
+        LikeDate = #{likeDate,jdbcType=DATE},
+      </if>
+    </set>
+    where WorkId = #{workId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.feelwith.business.data.dao.entity.Workactionlog" >
+    update workactionlog
+    set Likes = #{likes,jdbcType=INTEGER},
+      LikeDate = #{likeDate,jdbcType=DATE}
+    where WorkId = #{workId,jdbcType=INTEGER}
+  </update>
+</mapper>

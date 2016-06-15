@@ -14,7 +14,7 @@ public class UploadServiceTest {
     @Test
     public void upload() throws UploadException {
         File file = new File("E:\\pictures\\小伙子记住，这是你人生的巅峰.gif");
-        IFileUploadService service = MyBeanUtil.getBean("uploadService");
-        System.out.println(service.uploadFile(file));
+//        IFileUploadService service = MyBeanUtil.getBean("uploadService");
+//        System.out.println(service.uploadFile(file));
     }
 }

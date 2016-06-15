@@ -5,5 +5,5 @@ package me.feelwith.common.constants;
  */
 public class WebSiteConstants {
     public static final String FEEL_WITH_ADDR = "http://www.feelwith.me";
-    public static final String PIC_ADDR_PREFIX = FEEL_WITH_ADDR + ":8080";
+    public static final String PIC_ADDR_PREFIX = "http://cdn1.feelwith.me:8080";
 }

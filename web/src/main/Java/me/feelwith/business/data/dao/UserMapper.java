@@ -12,7 +12,7 @@ public interface UserMapper {
 
     int deleteByExample(UserExample example);
 
-    int deleteByPrimaryKey(Integer userid);
+    int deleteByPrimaryKey(Integer userId);
 
     int insert(User record);
 
@@ -20,7 +20,7 @@ public interface UserMapper {
 
     List<User> selectByExample(UserExample example);
 
-    User selectByPrimaryKey(Integer userid);
+    User selectByPrimaryKey(Integer userId);
 
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 
@@ -31,8 +31,8 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     @Update("update User set Score=Score+#{Score} where UserId=#{UserId}")
-    int increaseScore(@Param("UserId") int userId, @Param("Score") int score);
+    int increaseScore(@Param("UserId") int userId,@Param("Score") int score);
 
     @Select("SELECT  LAST_INSERT_ID()")
-    int selectLastId();
+    int selectLastInsertId();
 }
