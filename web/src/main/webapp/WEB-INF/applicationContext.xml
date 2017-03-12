@@ -3,13 +3,34 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
            ">
-    <context:component-scan base-package="me.feelwith"></context:component-scan>
+    <!-- 激活自动代理功能 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+
+	<!-- 配置数据库注解aop -->
+	<bean id="dataSourceAspect" class="me.feelwith.common.spring.DataSourceAspect"/>
+	<aop:config>
+		<aop:aspect id="c" ref="dataSourceAspect">
+			<aop:pointcut id="tx" expression="execution(* me.feelwith.business.service..*.*(..))"/>
+            <aop:pointcut id="tx" expression="execution(* me.feelwith.business.service..*.*(..))"/>
+			<aop:before pointcut-ref="tx" method="switchDataSource"/>
+		</aop:aspect>
+	</aop:config>
+
+    <!-- 不扫描带有@Controller注解的类。因为这些类已经随容器启动时，在servlet-context中扫描过一遍了 -->
+    <context:component-scan base-package="me.feelwith">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--<tx:annotation-driven />-->
     <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
 
     <bean id="transactionManager"
@@ -19,7 +40,7 @@
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
       <property name="dataSourceProperties" >
         <props>
-            <prop key="url">jdbc:MySQL://localhost:3306/feels</prop>
+            <prop key="url">jdbc:MySQL://localhost:3306/feels?useUnicode=true&amp;characterEncoding=UTF-8</prop>
              <!--<prop key="user">L</prop>-->
             <prop key="user">practice</prop>
             <!--<prop key="password">bylgdm235@#%</prop>-->
@@ -31,20 +52,38 @@
                 value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
     </bean>
 
-    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+    <bean id="defaultDataSource" class="com.zaxxer.hikari.HikariDataSource">
         <constructor-arg ref="hikariConfig" />
     </bean>
-    
+
+    <bean id="dataSource" class="me.feelwith.common.spring.DynamicDataSource">
+		<property name="targetDataSources">
+			<map>
+<!-- 				对应spring提供的AbstractRoutingDataSource的Map -->
+				<entry key="defaultDataSource" value-ref="defaultDataSource" />
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="defaultDataSource" />
+	</bean>
+
+
     <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->  
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
-        <property name="dataSource" ref="dataSource" />  
+        <property name="dataSource" ref="dataSource" />
+        <property name="plugins">
+            <array>
+                <bean class="me.feelwith.common.db.mybatis.StatementInteceptor"></bean>
+            </array>
+        </property>
         <!-- 自动扫描mapping.xml文件 -->  
-        <property name="mapperLocations" value="classpath:me/feelwith/**/mapper/**/*.xml"></property>
+        <property name="mapperLocations" value="classpath:me/feelwith/**/xml/**/*.xml"></property>
     </bean>
 
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="me.feelwith.business.data.dao" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>  
-    </bean>  
+    </bean>
+    <!--异常处理-->
+    <bean class="me.feelwith.common.spring.MyExceptionHandler"/>
 </beans>

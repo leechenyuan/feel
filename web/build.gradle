@@ -9,13 +9,19 @@ war {
     baseName = 'feels'
 //    version =  '0.0.1'
 }
-
+jar {
+   baseName = 'feels'
+   from('src/main/java') {
+       include '*.xml'
+   }
+}
 repositories {
     mavenCentral()
 }
 
 dependencies {
     compile(
+//    providedCompile(
             'com.google.code.gson:gson:2.3.1'
             ,'joda-time:joda-time:2.7'
             ,'junit:junit:4.12'
@@ -25,6 +31,9 @@ dependencies {
             ,'org.mybatis:mybatis:3.4.0'
             ,'com.zaxxer:HikariCP:2.4.6'
             ,'org.springframework:spring-jdbc:4.2.6.RELEASE'
+            ,'org.springframework:spring-aop:4.2.6.RELEASE'
+            ,'org.aspectj:aspectjrt:1.8.9'
+            ,'org.aspectj:aspectjtools:1.6.6'
             ,'org.mybatis:mybatis-spring:1.3.0'
             ,'org.apache.commons:commons-lang3:3.3.2'
             ,'org.apache.commons:commons-io:1.3.2'
@@ -43,11 +52,26 @@ dependencies {
             ,'org.mybatis.generator:mybatis-generator-core:1.3.2'
             ,'org.mybatis.generator:mybatis-generator-maven-plugin:1.3.2'
 
+            ,'com.fasterxml.jackson.core:jackson-databind:2.8.6'
+            ,'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.6'
     )
 
     compile files('E:\\homework\\java\\repository\\fastdfs_client.jar')
     compile files('E:\\homework\\java\\repository\\.jar')
 }
 
+
 //使用utf-8编码格式编译java
 tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+task copyToLib(type: Copy) {
+    into "$buildDir/output/lib"
+    from configurations.runtime
+}
+task compileOne (type: JavaCompile) {
+    source = sourceSets.main.java.srcDirs
+    include 'me.feelwith.common.db.mybatis.MyExample.java'
+    classpath = sourceSets.main.compileClasspath
+    destinationDir = sourceSets.main.output.classesDir
+}
+
+compileOne.options.compilerArgs = ["-sourcepath", "$projectDir/src/main/java"]

@@ -1,5 +1,6 @@
 package me.feelwith.business.web.upload;
 
+/**
 import me.feelwith.business.service.IFileUploadService;
 import me.feelwith.business.service.WorkService;
 import me.feelwith.business.web.common.WebUtil;
@@ -20,9 +21,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-/**
  * Created by Administrator on 2016/6/5.
- */
 @Controller
 @RequestMapping("upload")
 public class UploadController {
@@ -38,7 +37,7 @@ public class UploadController {
             //@FIXME
             int userId = 0;
             String path = uploadService.uploadFile(file.getInputStream(),name);
-            path = WebSiteConstants.FEEL_WITH_ADDR + "/"+ path;
+            path = WebSiteConstants.getFileUploadAddrPrefix() + "/"+ path;
             FileUploadResult result = new FileUploadResult();
             result.setFilePath(path);
             return new ModelAndView().addObject(result);
@@ -80,3 +79,4 @@ public class UploadController {
 //        return null;
 //    }
 }
+ */

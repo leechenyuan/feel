@@ -1,14 +1,13 @@
 package test.me.feelwith.business.service;
 
+/**
 import com.google.gson.Gson;
 import me.feelwith.business.service.UserService;
 import me.feelwith.business.service._UserService;
 import me.feelwith.common.bean.MyBeanUtil;
 import org.junit.Test;
 
-/**
  * Created by lideda on 2016/5/11.
- */
 public class UserServiceTest {
     @Test
     public void transaction(){
@@ -32,3 +31,4 @@ public class UserServiceTest {
         System.out.println(Gson.class.newInstance().toJson(userMapperService.getUserById(1)));
     }
 }
+ */

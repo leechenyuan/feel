@@ -1,5 +1,6 @@
 package me.feelwith.business.web;
 
+/**
 import me.feelwith.business.data.dao.entity.Work;
 import me.feelwith.business.data.dao.entity.Workcomment;
 import me.feelwith.business.service.WorkService;
@@ -17,9 +18,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/**
  * Created by Administrator on 2016/6/9.
- */
 @Controller
 @RequestMapping("works")
 public class WorkCtrl {
@@ -62,12 +61,13 @@ public class WorkCtrl {
     @RequestMapping(path = {"{workId:\\d+}/comments"},method = RequestMethod.POST)
     public ModelAndView addWorkComment(
            HttpServletRequest request
-            ,@RequestParam("workId")int word
+            ,@PathVariable("workId")int wordId
            ,@RequestParam("content")String content
             ,@RequestParam(value = "refCommentId",required = false) Integer refCommentId
             ,@RequestParam(value = "refUserId",required = false)Integer refUserId
     ){
         Workcomment w = buildWorkComment(WebUtil.getSimpleParams(request),WebUtil.getUserId(request));
+        w.setWorkId(wordId);
         return new ModelAndView().addObject("comment",workService.addWorkComment(w));
     }
 
@@ -88,3 +88,4 @@ public class WorkCtrl {
         return workcomment;
     }
 }
+ */

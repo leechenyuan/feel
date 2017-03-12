@@ -1,5 +1,6 @@
 package me.feelwith.business.web;
 
+/**
 import me.feelwith.business.data.dao.entity.User;
 import me.feelwith.business.service.UserService;
 import me.feelwith.business.web.common.WebUtil;
@@ -13,9 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/**
  * Created by Administrator on 2016/6/11.
- */
 @Controller
 @RequestMapping("users")
 public class UserCtrl {
@@ -35,7 +34,9 @@ public class UserCtrl {
         user.setAvatar(MapUtils.getString(data, "avatar"));
         user.setGender(MapUtils.getInteger(data, "gender"));
         user.setArea(MapUtils.getString(data, "area"));
-        user.setWeChatId(MapUtils.getString(data, "wechatId"));
+        user.setWeChatId(MapUtils.getString(data, "weChatId"));
+        user.setNickName(MapUtils.getString(data, "nickName"));
         return user;
     }
 }
+ */

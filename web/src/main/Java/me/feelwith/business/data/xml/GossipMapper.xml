@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.feelwith.business.data.dao.GossipMapper" >
+  <resultMap id="BaseResultMap" type="me.feelwith.business.data.entity.Gossip" >
+    <id column="gossip_id" property="gossipId" jdbcType="BIGINT" />
+    <result column="reply_id" property="replyId" jdbcType="BIGINT" />
+    <result column="transmit_id" property="transmitId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    gossip_id, reply_id, transmit_id, user_id, content, img, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.feelwith.business.data.entity.GossipExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from gossip
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gossip
+    where gossip_id = #{gossipId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from gossip
+    where gossip_id = #{gossipId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.feelwith.business.data.entity.GossipExample" >
+    delete from gossip
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.feelwith.business.data.entity.Gossip" >
+    insert into gossip (gossip_id, reply_id, transmit_id, 
+      user_id, content, img, 
+      create_time)
+    values (#{gossipId,jdbcType=BIGINT}, #{replyId,jdbcType=BIGINT}, #{transmitId,jdbcType=BIGINT}, 
+      #{userId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="me.feelwith.business.data.entity.Gossip" >
+    insert into gossip
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gossipId != null" >
+        gossip_id,
+      </if>
+      <if test="replyId != null" >
+        reply_id,
+      </if>
+      <if test="transmitId != null" >
+        transmit_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gossipId != null" >
+        #{gossipId,jdbcType=BIGINT},
+      </if>
+      <if test="replyId != null" >
+        #{replyId,jdbcType=BIGINT},
+      </if>
+      <if test="transmitId != null" >
+        #{transmitId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.feelwith.business.data.entity.GossipExample" resultType="java.lang.Integer" >
+    select count(*) from gossip
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update gossip
+    <set >
+      <if test="record.gossipId != null" >
+        gossip_id = #{record.gossipId,jdbcType=BIGINT},
+      </if>
+      <if test="record.replyId != null" >
+        reply_id = #{record.replyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.transmitId != null" >
+        transmit_id = #{record.transmitId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img != null" >
+        img = #{record.img,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update gossip
+    set gossip_id = #{record.gossipId,jdbcType=BIGINT},
+      reply_id = #{record.replyId,jdbcType=BIGINT},
+      transmit_id = #{record.transmitId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      content = #{record.content,jdbcType=VARCHAR},
+      img = #{record.img,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.feelwith.business.data.entity.Gossip" >
+    update gossip
+    <set >
+      <if test="replyId != null" >
+        reply_id = #{replyId,jdbcType=BIGINT},
+      </if>
+      <if test="transmitId != null" >
+        transmit_id = #{transmitId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where gossip_id = #{gossipId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.feelwith.business.data.entity.Gossip" >
+    update gossip
+    set reply_id = #{replyId,jdbcType=BIGINT},
+      transmit_id = #{transmitId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where gossip_id = #{gossipId,jdbcType=BIGINT}
+  </update>
+</mapper>

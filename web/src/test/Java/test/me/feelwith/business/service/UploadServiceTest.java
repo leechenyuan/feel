@@ -1,6 +1,6 @@
 package test.me.feelwith.business.service;
 
-import me.feelwith.business.service.IFileUploadService;
+//import me.feelwith.business.service.IFileUploadService;
 import me.feelwith.common.bean.MyBeanUtil;
 import me.feelwith.exception.UploadException;
 import org.junit.Test;

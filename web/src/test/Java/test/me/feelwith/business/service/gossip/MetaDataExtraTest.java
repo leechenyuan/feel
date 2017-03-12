@@ -1,5 +1,6 @@
 package test.me.feelwith.business.service.gossip;
 
+/**
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
@@ -20,9 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.UUID;
 
-/**
  * * Created by L on 2016/5/12 17:14.
- */
 public class MetaDataExtraTest {
     @Test
     public void extra() throws ImageProcessingException, IOException {
@@ -59,3 +58,4 @@ public class MetaDataExtraTest {
         System.err.println("ERROR: %s"+data);
     }
 }
+ */
